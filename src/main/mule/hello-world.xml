@@ -9,14 +9,7 @@
   
   <flow name="say-hello">
     <http:listener doc:name="Listener" doc:id="jyzbnz" path="/hello" config-ref="HttpListenerConnector"/>
-    <ee:transform doc:name="Transform Message" doc:id="bylfnv" >
-      <ee:message >
-        <ee:set-payload doc:name="Set payload" doc:id="gfqgdt" ><![CDATA[%dw 2.0
-output application/json
----
-{
-  "message": "Hello World!!"
-  }]]></ee:set-payload>
-      </ee:message>
-    </ee:transform></flow>
+    <set-variable doc:name="name" doc:id="zcsjyr" variableName="name" value='#[attributes.queryParams.name default "John"]'/>
+    <set-payload doc:name="Set payload" doc:id="jbmmxj" value='#["Hello!" ++ ", Welcome " ++ vars.name as String]'/>
+    <logger doc:name="Logger" doc:id="lxgbmi" message="#[payload]"/></flow>
 </mule>
