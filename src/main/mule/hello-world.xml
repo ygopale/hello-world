@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+	http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
   
+  <flow name="say-hello">
+    <http:listener doc:name="Listener" doc:id="jyzbnz" path="/hello" config-ref="HttpListenerConnector"/>
+    <ee:transform doc:name="Transform Message" doc:id="bylfnv" >
+      <ee:message >
+        <ee:set-payload doc:name="Set payload" doc:id="gfqgdt" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "message": "Hello World!!"
+  }]]></ee:set-payload>
+      </ee:message>
+    </ee:transform></flow>
 </mule>
